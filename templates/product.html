@@ -1,0 +1,85 @@
+{% extends "base.html" %} {% block content %}
+<!--
+The product component responsible to render all the information related to the chosen product such as:
+1- Product title
+2- Product price  
+3- Product discount price 
+4- Product image 
+5- Product description 
+6- Product Additional infromation
+-->
+<main class="mt-5 pt-4">
+  <div class="container dark-grey-text mt-5">
+    <div class="row wow fadeIn">
+      <div class="col-md-6 mb-4">
+        <img src="{{ item.image.url }}" class="card-img-top" />
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <!--Content-->
+        <div class="p-4">
+          <p class="lead font-weight-bold">{{item.title}}</p>
+          <p class="lead">
+            <!-- if the product has discount, it will render the new price after discount -->
+            {% if object.discount_price %}
+            <span class="mr-1">
+              <del>€{{ object.price }}</del>
+            </span>
+            <span>€{{ object.discount_price }}</span>
+            {% else %}
+            <span>€{{ object.price }}</span>
+            {% endif %}
+          </p>
+          <div><strong>Item_ID : {{item.slug}}</strong></div>
+          <p class="lead font-weight-bold">About this item</p>
+
+          <p>{{ object.description }}</p>
+          <!-- 
+            This function will add product to the user cart
+            place: main/models.py 
+          -->
+          <a
+            href="{{ object.get_add_to_cart_url }}"
+            class="btn btn-dark btn-md my-0 p"
+          >
+            Add to cart
+            <i class="fas fa-shopping-cart ml-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <!-- the additional infromation for each product -->
+    <div class="row d-flex justify-content-center wow fadeIn">
+      <div class="col-md-6 text-center">
+        <h4 class="my-4 h4">Additional information</h4>
+
+        <p>{{item.additional_info}}</p>
+      </div>
+    </div>
+    <div class="row wow fadeIn">
+      <div class="col-lg-4 col-md-12 mb-4">
+        <img
+          src="https://i.ibb.co/QPrMBdS/5a889e7a915c824e3af75af91ae5676a.jpg"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <img
+          src="https://i.ibb.co/6JLjN49/71h6-Pp-Gaz9-L-AC-SL1500.jpg"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <img
+          src="https://i.ibb.co/89n631P/MZB8489-EU-1.jpg"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock content %}

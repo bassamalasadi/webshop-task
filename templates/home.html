@@ -1,0 +1,129 @@
+{% extends "base.html" %} {% block content %}
+<main>
+  <div class="container">
+    <!--Navbar for product categories. It's not functional yet. -->
+    <nav class="navbar navbar-expand-lg navbar-dark mdb-color mt-5 mb-5">
+      <!-- Navbar brand -->
+      <span class="navbar-brand">Categories:</span>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="basicExampleNav">
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >All
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">TV</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Phone</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Laptop</a>
+          </li>
+        </ul>
+        <!-- Links -->
+
+        <form class="form-inline">
+          <div class="md-form my-0">
+            <input
+              class="form-control mr-sm-2"
+              type="text"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </div>
+        </form>
+      </div>
+      <!-- Collapsible content -->
+    </nav>
+    <!--/.Navbar-->
+
+    <!--Handling products-->
+    <section class="text-center mb-4">
+      <div class="row wow fadeIn">
+        <!-- loop through all items in database and display 
+      1- Product Image 
+      2- Product Name
+      3- Product price
+      -->
+        {% for item in object_list %}
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="card">
+            <div class="view overlay">
+              <!-- display image for a product-->
+              <img src="{{ item.image.url }}" class="card-img-top" />
+              <a href="{{ item.get_absolute_url }}">
+                <div class="mask rgba-white-slight"></div>
+              </a>
+            </div>
+
+            <div class="card-body text-center">
+              <h5>
+                <strong>
+                  <a href="{{ item.get_absolute_url }}" class="dark-grey-text"
+                    >{{ item.title }}
+                  </a>
+                </strong>
+              </h5>
+              <!-- condition statement: if the product has a discount it will render the
+               product price after discount, otherwise will render the original price-->
+              <h4 class="font-weight-bold blue-text">
+                <strong
+                  >€ {% if item.discount_price %} {{ item.discount_price }}
+                  {%else %} {{ item.price }} {% endif %}
+                </strong>
+              </h4>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!--Handling multiple pages-->
+    {% if is_paginated %}
+    <nav class="d-flex justify-content-center wow fadeIn">
+      <ul class="pagination pg-blue">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a
+            class="page-link"
+            href="?page={{ page_obj.previous_page_number }}"
+            aria-label="Previous"
+          >
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="page-item active">
+          <a class="page-link" href="?page={{ page_obj.number }}"
+            >{{ page_obj.number }}
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a
+            class="page-link"
+            href="?page={{ page_obj.next_page_number }}"
+            aria-label="Next"
+          >
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </div>
+</main>
+
+{% endblock content %}

@@ -1,0 +1,135 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
+<!-- Just Html file that displays the order_snippet.html alongside
+ with fields for billing address and shipping address -->
+<main>
+  <div class="container wow fadeIn">
+    <h2 class="my-5 h2 text-center">Checkout</h2>
+    <div class="row">
+      <div class="col-md-8 mb-4">
+        <div class="card">
+          <form method="" class="card-body">
+            {% csrf_token %}
+
+            <h3>Shipping-address</h3>
+
+            <div class="">
+              <div class="md-form mb-5">
+                <input
+                  type="text"
+                  placeholder="Address"
+                  id="shipping_address"
+                  name="shipping_address"
+                  class="form-control"
+                />
+                <label for="shipping_address" class=""></label>
+              </div>
+
+              <div class="md-form mb-5">
+                <input
+                  type="text"
+                  placeholder="Address 2 (optional)"
+                  id="shipping_address2"
+                  name="shipping_address2"
+                  class="form-control"
+                />
+                <label for="shipping_address2" class=""></label>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4 col-md-12 mb-4">
+                  <label for="country">Country</label>
+                  {{ form.shipping_country }}
+                  <div class="invalid-feedback">
+                    Please select a valid country.
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                  <label for="shipping_zip">Zip</label>
+                  <input
+                    type="text"
+                    placeholder="Zip code"
+                    id="shipping_zip"
+                    name="shipping_zip"
+                    class="form-control"
+                  />
+                  <div class="invalid-feedback">Zip code required.</div>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <h3>Billing address</h3>
+
+            <div class="">
+              <div class="md-form mb-5">
+                <input
+                  type="text"
+                  placeholder="Address"
+                  id="billing_address"
+                  name="billing_address"
+                  class="form-control"
+                />
+                <label for="billing_address" class=""></label>
+              </div>
+
+              <div class="md-form mb-5">
+                <input
+                  type="text"
+                  placeholder="Address 2 (optional)"
+                  id="billing_address2"
+                  name="billing_address2"
+                  class="form-control"
+                />
+                <label for="billing_address2" class=""></label>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4 col-md-12 mb-4">
+                  <label for="country">Country</label>
+                  {{ form.billing_country }}
+                  <div class="invalid-feedback">
+                    Please select a valid country.
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                  <label for="billing_zip">Zip</label>
+                  <input
+                    type="text"
+                    placeholder="Zip code"
+                    id="billing_zip"
+                    name="billing_zip"
+                    class="form-control"
+                  />
+                  <div class="invalid-feedback">Zip code required.</div>
+                </div>
+              </div>
+
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  name="set_default_billing"
+                  id="set_default_billing"
+                />
+                <label class="custom-control-label" for="set_default_billing"
+                  >Save as default billing address</label
+                >
+              </div>
+            </div>
+            <hr />
+
+            <button class="btn btn-primary btn-lg btn-block" type="submit">
+              Continue to checkout
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">{% include "order_snippet.html" %}</div>
+    </div>
+  </div>
+</main>
+
+{% endblock content %} {% block extra_scripts %} {% endblock extra_scripts %}

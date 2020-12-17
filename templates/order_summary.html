@@ -1,0 +1,113 @@
+{% extends "base.html" %} {% block content %}
+<main>
+  <div class="container">
+    <div class="table-responsive text-nowrap">
+      <h2>Order Summary</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item title</th>
+            <th scope="col">Country of origin</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Item Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order_item in object.items.all %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ order_item.item.title }}</td>
+            <td>{{ order_item.item.country_of.name}}</td>
+            <td>{{ order_item.item.price }}</td>
+            <td>
+              <!-- here we will increase the quantity of a product by passing the item id to the function in : 
+              main/views.py
+            -->
+              <a
+                href="{% url 'main:remove-single-item-from-cart' order_item.item.slug %}"
+                ><i class="fas fa-minus mr-2"></i
+              ></a>
+              {{ order_item.quantity }}
+              <!-- here we will decrease the quantity of a product by passing the item id to the function in : 
+              main/views.py
+              -->
+              <a href="{% url 'main:add-to-cart' order_item.item.slug %}"
+                ><i class="fas fa-plus"></i
+              ></a>
+            </td>
+            <td>
+              {% if order_item.item.discount_price %}
+              ${{order_item.get_total_discount_item_price }} {% else %}
+              ${{order_item.get_total_item_price }} {% endif %}
+            </td>
+            <td>
+              {%if order_item.item.discount_price%}
+              <span class="badge badge-dark mr-5"
+                >Saving ${{ order_item.get_amount_saved }}</span
+              >
+              {%endif%}
+            </td>
+            <td>
+              <!-- remove product from order list by passing the item id to the remove function in :
+              main/models.py
+              -->
+              <a
+                style="color: red"
+                href="{% url 'main:remove-from-cart' order_item.item.slug %}"
+              >
+                <i class="fas fa-trash float-right"></i>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">Your cart is empty</td>
+          </tr>
+          <tr>
+            <!-- will redirect the client to the home page  -->
+            <td colspan="5">
+              <a class="btn btn-primary float-left" href="/"
+                >Continue shopping</a
+              >
+            </td>
+          </tr>
+
+          {% endfor %}
+          <!-- It's a condition,  if there is a product, the client can proceed to checkout   -->
+          {% if object.get_total %}
+          <tr>
+            <td colspan="5"><b>Order Total</b></td>
+            <!-- "get_total" function will calculate the prices for all products :
+            main/models.py
+            -->
+            <td colspan="5">
+              <h4>
+                <b
+                  >${{ object.get_total }}
+                  <span class="badge badge-dark ml-5"
+                    >Saving ${{ object.get_total_desc }}</span
+                  >
+                </b>
+              </h4>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <a class="btn btn-warning float-right ml-2" href="/checkout/"
+                >Proceed to checkout</a
+              >
+              <a class="btn btn-primary float-right" href="/"
+                >Continue shopping</a
+              >
+            </td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}

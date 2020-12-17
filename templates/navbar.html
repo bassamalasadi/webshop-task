@@ -1,0 +1,60 @@
+{% load cart_template_tags %}
+
+<!--
+  The navbar will have different component
+1- The app name
+2- Login
+3- SignUp
+4- Cart
+5- Logout
+-->
+<nav
+  class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar bg-muted"
+>
+  <div class="container">
+    <a class="navbar-brand waves-effect" href="/">
+      <strong class="blue-text">Webshop</strong>
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto"></ul>
+
+      <ul class="navbar-nav nav-flex-icons">
+        <!-- condition statement:  if the user logged in will render the cart and logout components-->
+        {% if request.user.is_authenticated %}
+        <!-- if the user logged in -->
+        <!-- will render to the user the previous order summary form the database -->
+        <li class="nav-item">
+          <a
+            href="{% url 'main:order-summary' %}"
+            class="nav-link waves-effect"
+          >
+            <span class="badge red z-depth-1 mr-1">
+              {{ request.user|cart_item_count }}
+            </span>
+            <i class="fas fa-shopping-cart"></i>
+            <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="{% url 'account_logout' %}">
+            <span class="clearfix d-none d-sm-inline-block"> Logout </span>
+          </a>
+        </li>
+        <!-- condition statement: if the user is not signing in will render the login and signup components-->
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="{% url 'account_login' %}">
+            <span class="clearfix d-none d-sm-inline-block"> Login </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="{% url 'account_signup' %}">
+            <span class="clearfix d-none d-sm-inline-block"> Signup </span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
