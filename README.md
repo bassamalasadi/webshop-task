@@ -7,21 +7,23 @@ git clone https://github.com/bassamalasadi/webshop-task.git
 ```
 Install python version 3.8 on your computer:
 [Download Python](https://www.python.org/downloads/)
-then follow these steps: 
+then follow these steps which will install the virtual environment and create new `env` folder: 
 ```
 pip install virtualenv
 virtualenv env
 ```
 
-to activate the virtual environment on :
-mac/linux 
+To activate the virtual environment on :
+mac/linux terminal
 ```
 source env/bin/activate
 ```
-on windows
+on windows terminal
 ```
 env\Scripts\activate
 ```
+In the base directory of this project
+
 Then you need to install the project backages from requirements.txt
 ```
 pip install -r requirements.txt
