@@ -32,3 +32,8 @@ Finally run the project
 ```
 python manage.py runserver
 ```
+Then go to 
+```
+http://127.0.0.1:8000/admin/
+```
+The username 'bassam' and password ´´badboy999´
